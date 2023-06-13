@@ -15,55 +15,59 @@ product             /product         ext4      ro     wait,slotselect,avb,logica
 /misc         emmc       /dev/block/platform/bootdevice/by-name/misc               defaults defaults
 
 # Images
-/super          	 emmc    	/dev/block/platform/bootdevice/by-name/super            flags=backup=1;display="Super_image";flashimg=1
-/system_image	    emmc  	/dev/block/mapper/system                flags=backup=1;flashimg=1;display="System Image";slotselect
-/system     		     ext4	     /dev/block/mapper/system 
-/vendor_image	    emmc  	/dev/block/mapper/vendor                flags=backup=1;flashimg=1;display="Vendor Image";slotselect
-/vendor              ext4      /dev/block/mapper/vendor 
+/super           emmc    	/dev/block/platform/bootdevice/by-name/super            flags=backup=1;display="Super_image";flashimg=1;wipeingui
+/system_image    emmc  	        /dev/block/mapper/system                               flags=backup=1;flashimg=1;display="System Image";slotselect;wipeingui
+/system          ext4	        /dev/block/mapper/system 
+/vendor_image	 emmc   	/dev/block/mapper/vendor                              flags=backup=1;flashimg=1;display="Vendor Image";slotselect;wipeingui
+/vendor          ext4           /dev/block/mapper/vendor 
+/system_ext_image emmc          /dev/block/mapper/system_ext                          flags=backup=1;flashimg=1;display="System_ext Image";slotselect;wipeingui
+/product_image    emmc  	/dev/block/mapper/product                             flags=backup=1;flashimg=1;display="Product Image";slotselect;wipeingui
+/product          emmc          /dev/block/by-name/product                            flags=backup=1;display="Product";flashimg=1;slotselect;wipeingui
+/product          ext4	        /dev/block/mapper/product
 
 # Common partition                                                                                        
-/boot            emmc    /dev/block/by-name/boot               flags=backup=1;display="Boot";flashimg=1;slotselect
-/dtbo            emmc    /dev/block/by-name/dtbo               flags=backup=1;display="Dtbo";flashimg=1;slotselect
-/persist         ext4    /dev/block/by-name/persist            flags=backup=1;display="Persist";mounttodecrypt
-/persist_image   emmc    /dev/block/by-name/persist            flags=backup=1;display="Persist Image";flashimg=1
-/vbmeta		 emmc	 /dev/block/by-name/vbmeta             flags=display="vbmeta";backup=1;flashimg=1;slotselect
-/vbmeta_system   emmc    /dev/block/by-name/vbmeta_system      flags=backup=1;display="vbmeta_system";flashimg=1;slotselect
-/vbmeta_vendor   emmc    /dev/block/by-name/vbmeta_vendor      flags=backup=1;display="vbmeta_vendor";flashimg=1;slotselect
+/boot            emmc    /dev/block/by-name/boot               flags=backup=1;display="Boot";flashimg=1;slotselect;wipeingui
+/dtbo            emmc    /dev/block/by-name/dtbo               flags=backup=1;display="Dtbo";flashimg=1;slotselect;wipeingui
+/persist         ext4    /dev/block/by-name/persist            flags=backup=1;display="Persist";mounttodecrypt;wipeingui
+/persist_image   emmc    /dev/block/by-name/persist            flags=backup=1;display="Persist Image";flashimg=1;wipeingui
+/vbmeta		 emmc	 /dev/block/by-name/vbmeta             flags=display="vbmeta";backup=1;flashimg=1;slotselect;wipeingui
+/vbmeta_system   emmc    /dev/block/by-name/vbmeta_system      flags=backup=1;display="vbmeta_system";flashimg=1;slotselect;wipeingui
+/vbmeta_vendor   emmc    /dev/block/by-name/vbmeta_vendor      flags=backup=1;display="vbmeta_vendor";flashimg=1;slotselect;wipeingui
 
 # MediaTek partitions
-/bootloader         emmc       /dev/block/by-name/lk              flags=backup=1;display="Bootloader (lk)";flashimg=1;slotselect
-/logo		    emmc	/dev/block/by-name/logo             flags=display="logo";backup=1;flashimg=1
-/seccfg		    emmc	/dev/block/by-name/seccfg           flags=display="SecCfg";backup=1
-/proinfo	    emmc	/dev/block/by-name/proinfo          flags=display="Proinfo";backup=1
+/bootloader         emmc       /dev/block/by-name/lk              flags=backup=1;display="Bootloader (lk)";flashimg=1;slotselect;wipeingui
+/logo		    emmc	/dev/block/by-name/logo             flags=display="logo";backup=1;flashimg=1;wipeingui
+/seccfg		    emmc	/dev/block/by-name/seccfg           flags=display="SecCfg";backup=1;wipeingui
+/proinfo	    emmc	/dev/block/by-name/proinfo          flags=display="Proinfo";backup=1;wipeingui
 
 # Non-Volatile (RAM | DATA | CFG)
-/nvcfg		    ext4	/dev/block/by-name/nvcfg            flags=display="NvCfg";backup=1
-/nvdata		    ext4	/dev/block/by-name/nvdata           flags=display="NvData";backup=1
-/nvram		    emmc	/dev/block/by-name/nvram            flags=display="NvRam";backup=1;flashimg=1
+/nvcfg		    ext4	/dev/block/by-name/nvcfg            flags=display="NvCfg";backup=1;wipeingui
+/nvdata		    ext4	/dev/block/by-name/nvdata           flags=display="NvData";backup=1;wipeingui
+/nvram		    emmc	/dev/block/by-name/nvram            flags=display="NvRam";backup=1;flashimg=1;wipeingui
 
 # Subscriber Identification Module (SIM)
-/protect_f	    ext4	/dev/block/by-name/protect1         flags=display="Protect";backup=1
-/protect_s	    ext4	/dev/block/by-name/protect2         flags=backup=1;subpartitionof=/protect_f
+/protect_f	    ext4	/dev/block/by-name/protect1         flags=display="Protect";backup=1;wipeingui
+/protect_s	    ext4	/dev/block/by-name/protect2         flags=backup=1;subpartitionof=/protect_f;wipeingui
 
 # Trusted Execution Environment (TEE) - trustzone
-/tee		    emmc	/dev/block/by-name/tee             flags=display="Tee";backup=1;flashimg=1;slotselect
+/tee		    emmc	/dev/block/by-name/tee             flags=display="Tee";backup=1;flashimg=1;slotselect;wipeingui
 
 # Factory Reset Protection (FRP)
-/persistent	    emmc	/dev/block/by-name/frp              flags=display="frp";backup=1;flashimg=1
+/persistent	    emmc	/dev/block/by-name/frp              flags=display="frp";backup=1;flashimg=1;wipeingui
 
 # Firmware
-/gz            emmc    /dev/block/by-name/gz               flags=display="gz";backup=1;slotselect
+/gz            emmc    /dev/block/by-name/gz               flags=display="gz";backup=1;slotselect;wipeingui
 
 # Modem
-/md1img		    emmc	/dev/block/by-name/md1img           flags=display="md1img";backup=1;flashimg=1;slotselect
+/md1img		    emmc	/dev/block/by-name/md1img           flags=display="md1img";backup=1;flashimg=1;slotselect;wipeingui
 
 
 # System Control Processor (SCP)
-/scp		    emmc	/dev/block/by-name/scp             flags=display="scp";backup=1;slotselect
+/scp		    emmc	/dev/block/by-name/scp             flags=display="scp";backup=1;slotselect;wipeingui
 
 # Other partitions
-/spmfw		    emmc	/dev/block/by-name/spmfw            flags=display="Spmfw";backup=1;slotselect
-/sspm		    emmc	/dev/block/by-name/sspm           flags=display="sspm";backup=1;slotselect
+/spmfw		    emmc	/dev/block/by-name/spmfw            flags=display="Spmfw";backup=1;slotselect;wipeingui
+/sspm		    emmc	/dev/block/by-name/sspm           flags=display="sspm";backup=1;slotselect;wipeingui
 
 # External-Devices (SDCARD | OTG)
 /external_sd    auto     /dev/block/mmcblk1p1  /dev/block/mmcblk1            flags=display="External_SDcard";storage;wipeingui;removable;fsflags="utf8"
